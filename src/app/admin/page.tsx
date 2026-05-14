@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import {
     Loader2, User, MapPin, DollarSign, Calendar, Mail,
-    Phone, ExternalLink, ShieldCheck, Send, Plus, Trash2,
+    Phone, ShieldCheck, Send, Plus, Trash2,
     CreditCard, MessageSquare, ShoppingBag, RefreshCw, Edit,
     Upload, X
 } from "lucide-react";
@@ -908,7 +908,7 @@ export default function AdminDashboard() {
                         </div>
                         <div className="space-y-4">
                             <div>
-                                <label className="text-[10px] text-gold/60 uppercase block mb-1 font-bold">Type "delete" below</label>
+                                <label className="text-[10px] text-gold/60 uppercase block mb-1 font-bold">Type &quot;delete&quot; below</label>
                                 <input
                                     type="text"
                                     value={deleteConfirmText}

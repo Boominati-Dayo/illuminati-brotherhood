@@ -16,7 +16,6 @@ export default function Hero() {
     }, []);
 
     const y = mounted ? (scrollY * 0.3) : 0;
-    const opacity = mounted ? Math.max(0.3, 1 - scrollY / 300) : 1;
 
     const scrollToSection = () => {
         document.getElementById("steps")?.scrollIntoView({ behavior: "smooth" });

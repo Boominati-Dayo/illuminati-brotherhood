@@ -21,7 +21,7 @@ export async function GET() {
         await connectToDatabase();
         const items = await Item.find({});
         return NextResponse.json(items);
-    } catch (error) {
+    } catch {
         return NextResponse.json({ error: "Failed to fetch items" }, { status: 500 });
     }
 }

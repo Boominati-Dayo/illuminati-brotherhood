@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
         const fileName = `${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
         const filePath = `artifacts/${fileName}`;
 
-        const { data, error } = await supabase.storage
+        const { error } = await supabase.storage
             .from("media")
             .upload(filePath, file, {
                 cacheControl: "3600",
