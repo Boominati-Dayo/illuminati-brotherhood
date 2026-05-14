@@ -57,7 +57,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Iluminati Brotherhood", url: BASE_URL }],
   creator: "Iluminati Brotherhood",
   publisher: "Iluminati Brotherhood",
-  robots: {
+robots: {
     index: true,
     follow: true,
     googleBot: {
@@ -66,6 +66,12 @@ export const metadata: Metadata = {
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
+    },
+  },
+    other: {
+      "geo-position": "Brazil",
+      "geo-region": "BR",
+      "geo-placename": "Brazil",
     },
   },
   alternates: {
@@ -113,8 +119,6 @@ export const metadata: Metadata = {
     yandex: "yandex-verification-code",
   },
   other: {
-    "geo.region": "BR",
-    "geo.placename": "Brazil",
     "revisit-after": "7 days",
     "language": "pt-BR",
   },
