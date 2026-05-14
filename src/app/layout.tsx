@@ -93,7 +93,7 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: `${BASE_URL}/opengraph-image.png`,
+        url: `${BASE_URL}/og-image.png`,
         width: 1200,
         height: 630,
         alt: "Iluminati Brotherhood - Portal Exclusivo de Membros",
@@ -106,7 +106,7 @@ export const metadata: Metadata = {
     title: "Iluminati Brotherhood | Siga a Luz",
     description: "Portal oficial de recrutamento da Iluminati Brotherhood no Brasil. Junte-se a uma rede global de elite.",
     creator: "@illuminatibrot",
-    images: [`${BASE_URL}/opengraph-image.png`],
+    images: [`${BASE_URL}/og-image.png`],
   },
   verification: {
     google: "google-site-verification-code",
@@ -159,7 +159,7 @@ export default function RootLayout({
         },
         image: {
           "@type": "ImageObject",
-          url: `${BASE_URL}/opengraph-image.png`,
+          url: `${BASE_URL}/og-image.png`,
           width: 1200,
           height: 630,
         },
@@ -377,7 +377,7 @@ export default function RootLayout({
         <link
           rel="preload"
           as="image"
-          href="/opengraph-image.png"
+          href="/og-image.png"
           fetchPriority="high"
         />
         <link rel="preload" as="font" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" crossOrigin="anonymous" />
