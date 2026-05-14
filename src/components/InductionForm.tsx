@@ -188,11 +188,10 @@ export default function InductionForm() {
                             </motion.div>
                         )}
 
-                        {currentStep === 1 && (
+{currentStep === 1 && (
                             <motion.div key="step1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                                    <div className="md:col-span-2">
-<FormInput label="Profissão" {...register("occupation")} error={errors.occupation?.message} />
+                                    <FormInput label="Profissão" {...register("occupation")} error={errors.occupation?.message} />
                                     <FormInput label="País" {...register("country")} error={errors.country?.message} />
                                     <FormInput label="Cidade" {...register("city")} error={errors.city?.message} />
                                     <div className="md:col-span-2">
