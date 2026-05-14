@@ -31,11 +31,15 @@ export default function ShopPage() {
             fetch("/api/shop/items").then(res => res.json()),
             fetch("/api/admin/payment-methods").then(res => res.json())
         ]).then(([itemsData, paymentsData]) => {
-            setItems(itemsData);
-            setPaymentMethods(paymentsData);
-            if (paymentsData.length > 0) {
+            setItems(Array.isArray(itemsData) ? itemsData : []);
+            setPaymentMethods(Array.isArray(paymentsData) ? paymentsData : []);
+            if (Array.isArray(paymentsData) && paymentsData.length > 0) {
                 setFormData(prev => ({ ...prev, paymentMethod: paymentsData[0].name }));
             }
+            setLoading(false);
+        }).catch(() => {
+            setItems([]);
+            setPaymentMethods([]);
             setLoading(false);
         });
     }, []);

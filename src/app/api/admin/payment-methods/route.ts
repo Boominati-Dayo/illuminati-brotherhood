@@ -41,9 +41,12 @@ export async function PUT(req: NextRequest) {
     const session = await getServerSession(authOptions);
     if (!session) return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
 
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
+
     try {
         await connectToDatabase();
-        const { id, ...updateData } = await req.json();
+        const updateData = await req.json();
         const method = await PaymentMethod.findByIdAndUpdate(id, updateData, { new: true });
         return NextResponse.json(method);
     } catch (error: unknown) {

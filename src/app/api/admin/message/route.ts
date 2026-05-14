@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
     const themedHtml = `
       <div style="font-family: serif; background-color: #0a0a0a; color: #d4af37; padding: 40px; border: 1px solid #d4af37;">
         <div style="text-align: center; margin-bottom: 30px;">
-          <h1 style="color: #d4af37; letter-spacing: 5px; text-transform: uppercase;">Rothschild & Co</h1>
+          <h1 style="color: #d4af37; letter-spacing: 5px; text-transform: uppercase;">Iluminati Brotherhood</h1>
           <p style="color: #d4af37; font-size: 12px; letter-spacing: 2px;">Sacred Communication</p>
         </div>
         

@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
                     <p><strong>Next Steps:</strong> An administrator will review your order and send the payment details and shipping protocol to your email shortly.</p>
                     <p>You can track your order status on our portal using your registration code and this order number.</p>
                     <p style="margin-top: 30px;">Light and progress be upon you.</p>
-                    <p style="text-align: right;"><em>Rothschild & Co</em></p>
+                    <p style="text-align: right;"><em>Iluminati Brotherhood</em></p>
                 </div>
             </div>
         `;

@@ -3,13 +3,13 @@
 import { motion } from "framer-motion";
 
 const benefits = [
-    "Transform big dreams into reality",
-    "Elevate supernatural beliefs",
-    "Elevate from low class to high society",
-    "Monthly wage of $100,000 USD",
-    "Open-door Membership ID",
-    "Welcome benefit of $30,000,000",
-    "Free global flights & elite dining",
+    "Transforme grandes sonhos em realidade",
+    "Eleve as crenças sobrenaturais",
+    "Eleve da classe baixa para alta sociedade",
+    "Salário mensal de $100.000 USD",
+    "ID de Membresia Porta Aberta",
+    "Benefício de boas-vindas de $30.000.000",
+    "Voos globais gratuitos e refeições de elite",
 ];
 
 export default function Benefits() {
@@ -25,18 +25,22 @@ export default function Benefits() {
                         viewport={{ once: true }}
                         className="lg:w-1/2"
                     >
-                        <h2 className="text-3xl md:text-5xl font-serif gold-gradient-text mb-6 md:mb-8">Rewards of the Chosen</h2>
+                        <h2 className="text-3xl md:text-5xl font-serif gold-gradient-text mb-6 md:mb-8">Recompensas dos Escolhidos</h2>
                         <p className="text-foreground/60 text-base md:text-lg mb-8 md:mb-10 font-light max-w-xl">
-                            Our objective is to raise challenges and give them fortune, accept the weak and make them stronger, and turn the poor into rich and famous.
+                            Nosso objetivo é elevar desafios e dar-lhes fortuna, aceitar os fracos e torná-los mais fortes, e transformar os pobres em ricos e famosos.
                         </p>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                             {benefits.map((benefit, i) => (
-                                <div key={i} className="flex items-start gap-3">
-                                    <div className="w-5 h-5 mt-1 border border-gold rounded-full flex-shrink-0 flex items-center justify-center">
-                                        <div className="w-2 h-2 bg-gold rounded-full" />
+                                <motion.div
+                                    key={i}
+                                    whileHover={{ x: 8, transition: { duration: 0.2 } }}
+                                    className="flex items-start gap-4 p-4 rounded-lg hover:bg-gold/5 transition-all group cursor-default"
+                                >
+                                    <div className="w-6 h-6 mt-0.5 border border-gold/50 rounded-full flex-shrink-0 flex items-center justify-center group-hover:border-gold group-hover:bg-gold/20 transition-all">
+                                        <div className="w-2.5 h-2.5 bg-gold rounded-full group-hover:scale-125 transition-transform" />
                                     </div>
-                                    <span className="text-foreground/80 font-light">{benefit}</span>
-                                </div>
+                                    <span className="text-foreground/80 font-light group-hover:text-foreground transition-colors">{benefit}</span>
+                                </motion.div>
                             ))}
                         </div>
                     </motion.div>
@@ -48,7 +52,6 @@ export default function Benefits() {
                         className="lg:w-1/2 relative"
                     >
                         <div className="relative w-full aspect-square max-w-md mx-auto">
-                            {/* Sacred Triangle Visual */}
                             <div className="absolute inset-0 flex items-center justify-center">
                                 <motion.div
                                     animate={{ rotate: 360 }}
@@ -63,7 +66,7 @@ export default function Benefits() {
                                 <div className="z-10 text-[180px] text-gold/20 font-serif opacity-30 select-none">🔺</div>
                                 <div className="absolute z-20 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center">
                                     <p className="text-gold font-bold text-6xl italic">$30M</p>
-                                    <p className="text-gold/60 uppercase tracking-widest text-xs mt-2">Welcome Benefit</p>
+                                    <p className="text-gold/60 uppercase tracking-widest text-xs mt-2">Benefício de Boas-Vindas</p>
                                 </div>
                             </div>
                         </div>

@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
 
     const userEmailHtml = `
       <div style="font-family: serif; background-color: #0a0a0a; color: #d4af37; padding: 40px; border: 1px solid #d4af37; text-align: center;">
-        <h1 style="color: #d4af37;">Welcome to Rothschild & Co</h1>
+        <h1 style="color: #d4af37;">Bem-vindo à Iluminati Brotherhood</h1>
         <div style="text-align: left; max-width: 500px; margin: 0 auto; border: 1px dashed #d4af37; padding: 20px; margin-bottom: 30px;">
           <p style="text-align: center; font-size: 0.8em; text-transform: uppercase; tracking: 0.2em; color: #d4af37/60;">Your Sacred Registration Code</p>
           <p style="text-align: center; font-size: 2em; font-weight: bold; letter-spacing: 0.1em; margin: 10px 0;">${uniqueCode}</p>
@@ -94,14 +94,14 @@ export async function POST(req: NextRequest) {
             <li>Access to the Sacred Artifacts Portal.</li>
           </ul>
           <p style="margin-top: 30px;">Light and progress be upon you always.</p>
-          <p style="text-align: right;"><em>Rothschild & Co</em></p>
+          <p style="text-align: right;"><em>Iluminati Brotherhood</em></p>
         </div>
       </div>
     `;
 
     await Promise.allSettled([
       sendEmail(process.env.ADMIN_EMAIL!, `NEW REGISTRATION: ${body.name}`, adminEmailHtml),
-      sendEmail(body.email, "Registration Received - Rothschild & Co", userEmailHtml)
+      sendEmail(body.email, "Registro Recebido - Iluminati Brotherhood", userEmailHtml)
     ]);
 
     return NextResponse.json({ success: true, id: registration._id, uniqueCode });

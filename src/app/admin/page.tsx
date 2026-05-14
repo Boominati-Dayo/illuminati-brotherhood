@@ -6,7 +6,8 @@ import { useEffect, useState } from "react";
 import {
     Loader2, User, MapPin, DollarSign, Calendar, Mail,
     Phone, ExternalLink, ShieldCheck, Send, Plus, Trash2,
-    CreditCard, MessageSquare, ShoppingBag, RefreshCw, Edit
+    CreditCard, MessageSquare, ShoppingBag, RefreshCw, Edit,
+    Upload, X
 } from "lucide-react";
 import Image from "next/image";
 import { motion } from "framer-motion";
@@ -91,9 +92,21 @@ export default function AdminDashboard() {
     // Shop state
     const [showItemModal, setShowItemModal] = useState(false);
     const [itemData, setItemData] = useState({ name: "", price: 0, description: "", mysticalProperties: "", image: "" });
+    const [editingItem, setEditingItem] = useState<ItemRecord | null>(null);
+    const [uploading, setUploading] = useState(false);
+
+    // Payment edit state
+    const [editingPayment, setEditingPayment] = useState<PaymentMethodRecord | null>(null);
 
     // Order state
     const [updatingOrder, setUpdatingOrder] = useState<string | null>(null);
+
+    // Delete confirmation state
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [deleteTarget, setDeleteTarget] = useState<{ type: string; id: string; name: string } | null>(null);
+    const [deleteConfirmText, setDeleteConfirmText] = useState("");
+    const [deletePassword, setDeletePassword] = useState("");
+    const [deleting, setDeleting] = useState(false);
 
     useEffect(() => {
         if (status === "unauthenticated") {
@@ -112,12 +125,21 @@ export default function AdminDashboard() {
                 fetch("/api/admin/items"),
                 fetch("/api/admin/orders")
             ]);
-            setRegistrations(await regRes.json());
-            setPaymentMethods(await payRes.json());
-            setItems(await itemRes.json());
-            setOrders(await orderRes.json());
+            const regData = await regRes.json();
+            const payData = await payRes.json();
+            const itemData = await itemRes.json();
+            const orderData = await orderRes.json();
+            
+            setRegistrations(Array.isArray(regData) ? regData : []);
+            setPaymentMethods(Array.isArray(payData) ? payData : []);
+            setItems(Array.isArray(itemData) ? itemData : []);
+            setOrders(Array.isArray(orderData) ? orderData : []);
         } catch (err: unknown) {
             console.error(err);
+            setRegistrations([]);
+            setPaymentMethods([]);
+            setItems([]);
+            setOrders([]);
         } finally {
             setLoading(false);
         }
@@ -175,6 +197,54 @@ export default function AdminDashboard() {
         }
     };
 
+    const handleUpdatePayment = async () => {
+        if (!editingPayment) return;
+        try {
+            const res = await fetch(`/api/admin/payment-methods?id=${editingPayment._id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(editingPayment)
+            });
+            if (res.ok) {
+                fetchData();
+                setEditingPayment(null);
+            }
+        } catch {
+            alert("Failed to update");
+        }
+    };
+
+    const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, target: "itemData" | "editingItem") => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+        
+        setUploading(true);
+        try {
+            const formData = new FormData();
+            formData.append("file", file);
+            
+            const res = await fetch("/api/admin/upload", {
+                method: "POST",
+                body: formData
+            });
+            
+            if (res.ok) {
+                const data = await res.json();
+                if (target === "itemData") {
+                    setItemData({ ...itemData, image: data.url });
+                } else if (editingItem) {
+                    setEditingItem({ ...editingItem, image: data.url });
+                }
+            } else {
+                alert("Upload failed");
+            }
+        } catch {
+            alert("Upload failed");
+        } finally {
+            setUploading(false);
+        }
+    };
+
     const handleSaveItem = async () => {
         try {
             const res = await fetch("/api/admin/items", {
@@ -202,6 +272,23 @@ export default function AdminDashboard() {
         }
     };
 
+    const handleUpdateItem = async () => {
+        if (!editingItem) return;
+        try {
+            const res = await fetch(`/api/admin/items?id=${editingItem._id}`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(editingItem)
+            });
+            if (res.ok) {
+                fetchData();
+                setEditingItem(null);
+            }
+        } catch {
+            alert("Failed to update item");
+        }
+    };
+
     const handleUpdateOrderStatus = async (id: string, status: string) => {
         setUpdatingOrder(id);
         try {
@@ -217,6 +304,30 @@ export default function AdminDashboard() {
             alert("Failed to update status");
         } finally {
             setUpdatingOrder(null);
+        }
+    };
+
+    const confirmDelete = async () => {
+        if (deleteConfirmText.toLowerCase() !== "delete" || !deletePassword) {
+            alert("Please type 'delete' and enter your admin password");
+            return;
+        }
+        setDeleting(true);
+        try {
+            if (deleteTarget?.type === "registration") {
+                await fetch(`/api/admin/registrations?id=${deleteTarget.id}`, { method: "DELETE" });
+            } else if (deleteTarget?.type === "order") {
+                await fetch(`/api/admin/orders?id=${deleteTarget.id}`, { method: "DELETE" });
+            }
+            fetchData();
+            setShowDeleteModal(false);
+            setDeleteTarget(null);
+            setDeleteConfirmText("");
+            setDeletePassword("");
+        } catch {
+            alert("Failed to delete");
+        } finally {
+            setDeleting(false);
         }
     };
 
@@ -331,9 +442,12 @@ export default function AdminDashboard() {
                                                 >
                                                     <MessageSquare size={12} /> Inbox
                                                 </button>
-                                                <a href={`https://wa.me/${reg.phone.replace(/\D/g, '')}`} target="_blank" className="flex items-center justify-center gap-1 py-1.5 bg-gold/10 border border-gold/20 text-gold text-[8px] uppercase tracking-tighter hover:bg-gold hover:text-obsidian transition-all">
-                                                    <ExternalLink size={12} /> Contact
-                                                </a>
+                                                <button
+                                                    onClick={() => { setDeleteTarget({ type: "registration", id: reg._id, name: reg.name }); setShowDeleteModal(true); }}
+                                                    className="flex items-center justify-center gap-1 py-1.5 bg-red-500/5 border border-red-500/20 text-red-500 text-[8px] uppercase tracking-tighter hover:bg-red-500 hover:text-obsidian transition-all"
+                                                >
+                                                    <Trash2 size={12} /> Delete
+                                                </button>
                                             </div>
                                         </div>
                                     </div>
@@ -365,12 +479,20 @@ export default function AdminDashboard() {
                                             <p className="text-[10px] text-gold/40 uppercase">{m.description || 'No description'}</p>
                                         </div>
                                     </div>
-                                    <button
-                                        onClick={() => handleDeletePayment(m._id)}
-                                        className="text-red-500/20 group-hover:text-red-500 transition-all p-2 hover:bg-red-500/10 rounded-full"
-                                    >
-                                        <Trash2 size={16} />
-                                    </button>
+                                    <div className="flex gap-2">
+                                        <button
+                                            onClick={() => setEditingPayment(m)}
+                                            className="text-gold/20 group-hover:text-gold transition-all p-2 hover:bg-gold/10 rounded-full"
+                                        >
+                                            <Edit size={16} />
+                                        </button>
+                                        <button
+                                            onClick={() => handleDeletePayment(m._id)}
+                                            className="text-red-500/20 group-hover:text-red-500 transition-all p-2 hover:bg-red-500/10 rounded-full"
+                                        >
+                                            <Trash2 size={16} />
+                                        </button>
+                                    </div>
                                 </div>
                             ))}
                         </div>
@@ -410,6 +532,7 @@ export default function AdminDashboard() {
                                         <p className="text-foreground/60 text-xs mb-4 line-clamp-2">{item.description}</p>
                                         <div className="mt-auto pt-4 flex justify-between items-center border-t border-gold/10">
                                             <div className="flex gap-2">
+                                                <button onClick={() => setEditingItem(item)} className="p-2 text-gold/40 hover:text-gold transition-all"><Edit size={16} /></button>
                                                 <button onClick={() => handleDeleteItem(item._id)} className="p-2 text-red-500/40 hover:text-red-500 transition-all"><Trash2 size={16} /></button>
                                             </div>
                                             <p className="text-[8px] text-gold/20 uppercase tracking-widest">{new Date(item.createdAt).toLocaleDateString()}</p>
@@ -477,6 +600,13 @@ export default function AdminDashboard() {
                                             title="Message Client"
                                         >
                                             <Send size={16} />
+                                        </button>
+                                        <button
+                                            onClick={() => { setDeleteTarget({ type: "order", id: order._id, name: order.orderNumber }); setShowDeleteModal(true); }}
+                                            className="p-3 bg-red-500/5 border border-red-500/10 rounded-lg text-red-500 hover:bg-red-500 hover:text-obsidian transition-all"
+                                            title="Delete Order"
+                                        >
+                                            <Trash2 size={16} />
                                         </button>
                                     </div>
                                 </div>
@@ -588,13 +718,34 @@ export default function AdminDashboard() {
                                 </div>
                             </div>
                             <div>
-                                <label className="text-[10px] text-gold/60 uppercase block mb-1 font-bold">Image URL</label>
-                                <input
-                                    placeholder="https://..."
-                                    value={itemData.image}
-                                    onChange={(e) => setItemData({ ...itemData, image: e.target.value })}
-                                    className="w-full bg-obsidian-light border border-gold/20 rounded-md p-3 text-gold text-sm focus:border-gold outline-none transition-all"
-                                />
+                                <label className="text-[10px] text-gold/60 uppercase block mb-1 font-bold">Image</label>
+                                <div className="flex items-center gap-4">
+                                    {itemData.image ? (
+                                        <div className="relative w-20 h-20 rounded-lg overflow-hidden border border-gold/20">
+                                            <img src={itemData.image} alt="Preview" className="w-full h-full object-cover" />
+                                            <button
+                                                type="button"
+                                                onClick={() => setItemData({ ...itemData, image: "" })}
+                                                className="absolute top-0 right-0 bg-red-500 p-1 rounded-bl-lg"
+                                            >
+                                                <X size={12} className="text-white" />
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <label className="w-20 h-20 rounded-lg border-2 border-dashed border-gold/30 flex flex-col items-center justify-center cursor-pointer hover:border-gold transition-all">
+                                            <Upload size={20} className="text-gold/40" />
+                                            <span className="text-[8px] text-gold/40 mt-1">Upload</span>
+                                            <input
+                                                type="file"
+                                                accept="image/*"
+                                                className="hidden"
+                                                onChange={(e) => handleImageUpload(e, "itemData")}
+                                                disabled={uploading}
+                                            />
+                                        </label>
+                                    )}
+                                    {uploading && <Loader2 className="w-5 h-5 text-gold animate-spin" />}
+                                </div>
                             </div>
                             <div>
                                 <label className="text-[10px] text-gold/60 uppercase block mb-1 font-bold">Description</label>
@@ -617,6 +768,179 @@ export default function AdminDashboard() {
                             <div className="flex gap-4 pt-4">
                                 <button onClick={() => setShowItemModal(false)} className="flex-1 text-gold/40 text-[10px] uppercase font-bold">Dissolve</button>
                                 <button onClick={handleSaveItem} className="flex-1 py-3 bg-gold text-obsidian text-[10px] uppercase font-bold rounded-md">Manifest Artifact</button>
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
+            )}
+
+            {/* Edit Item Modal */}
+            {editingItem && (
+                <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-obsidian/90 backdrop-blur-sm">
+                    <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="glass max-w-lg w-full p-8 rounded-3xl border-gold/40">
+                        <h2 className="text-2xl font-serif text-gold mb-6">Update Artifact</h2>
+                        <div className="space-y-4">
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="text-[10px] text-gold/60 uppercase block mb-1 font-bold">Name</label>
+                                    <input
+                                        value={editingItem.name}
+                                        onChange={(e) => setEditingItem({ ...editingItem, name: e.target.value })}
+                                        className="w-full bg-obsidian-light border border-gold/20 rounded-md p-3 text-gold text-sm focus:border-gold outline-none transition-all"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="text-[10px] text-gold/60 uppercase block mb-1 font-bold">Price (USD)</label>
+                                    <input
+                                        type="number"
+                                        value={editingItem.price}
+                                        onChange={(e) => setEditingItem({ ...editingItem, price: parseInt(e.target.value) || 0 })}
+                                        className="w-full bg-obsidian-light border border-gold/20 rounded-md p-3 text-gold text-sm focus:border-gold outline-none transition-all"
+                                    />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="text-[10px] text-gold/60 uppercase block mb-1 font-bold">Image</label>
+                                <div className="flex items-center gap-4">
+                                    {editingItem.image ? (
+                                        <div className="relative w-20 h-20 rounded-lg overflow-hidden border border-gold/20">
+                                            <img src={editingItem.image} alt="Preview" className="w-full h-full object-cover" />
+                                            <button
+                                                type="button"
+                                                onClick={() => setEditingItem({ ...editingItem, image: "" })}
+                                                className="absolute top-0 right-0 bg-red-500 p-1 rounded-bl-lg"
+                                            >
+                                                <X size={12} className="text-white" />
+                                            </button>
+                                        </div>
+                                    ) : (
+                                        <label className="w-20 h-20 rounded-lg border-2 border-dashed border-gold/30 flex flex-col items-center justify-center cursor-pointer hover:border-gold transition-all">
+                                            <Upload size={20} className="text-gold/40" />
+                                            <span className="text-[8px] text-gold/40 mt-1">Upload</span>
+                                            <input
+                                                type="file"
+                                                accept="image/*"
+                                                className="hidden"
+                                                onChange={(e) => handleImageUpload(e, "editingItem")}
+                                                disabled={uploading}
+                                            />
+                                        </label>
+                                    )}
+                                    {uploading && <Loader2 className="w-5 h-5 text-gold animate-spin" />}
+                                </div>
+                            </div>
+                            <div>
+                                <label className="text-[10px] text-gold/60 uppercase block mb-1 font-bold">Description</label>
+                                <textarea
+                                    value={editingItem.description}
+                                    onChange={(e) => setEditingItem({ ...editingItem, description: e.target.value })}
+                                    className="w-full bg-obsidian-light border border-gold/20 rounded-md p-3 text-gold text-sm h-24 focus:border-gold outline-none transition-all"
+                                />
+                            </div>
+                            <div>
+                                <label className="text-[10px] text-gold/60 uppercase block mb-1 font-bold">Mystical Properties</label>
+                                <textarea
+                                    value={editingItem.mysticalProperties || ""}
+                                    onChange={(e) => setEditingItem({ ...editingItem, mysticalProperties: e.target.value })}
+                                    className="w-full bg-obsidian-light border border-gold/20 rounded-md p-3 text-gold text-sm h-24 focus:border-gold outline-none transition-all"
+                                />
+                            </div>
+                            <div className="flex gap-4 pt-4">
+                                <button onClick={() => setEditingItem(null)} className="flex-1 text-gold/40 text-[10px] uppercase font-bold">Cancel</button>
+                                <button onClick={handleUpdateItem} className="flex-1 py-3 bg-gold text-obsidian text-[10px] uppercase font-bold rounded-md">Save Changes</button>
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
+            )}
+
+            {/* Edit Payment Modal */}
+            {editingPayment && (
+                <div className="fixed inset-0 z-[200] flex items-center justify-center p-6 bg-obsidian/90 backdrop-blur-sm">
+                    <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="glass max-w-md w-full p-8 rounded-3xl border-gold/40">
+                        <h2 className="text-2xl font-serif text-gold mb-6">Edit Payment Method</h2>
+                        <div className="space-y-4">
+                            <div>
+                                <label className="text-[10px] text-gold/60 uppercase block mb-1 font-bold">Name</label>
+                                <input
+                                    value={editingPayment.name}
+                                    onChange={(e) => setEditingPayment({ ...editingPayment, name: e.target.value })}
+                                    className="w-full bg-obsidian-light border border-gold/20 rounded-md p-3 text-gold text-sm focus:border-gold outline-none transition-all"
+                                />
+                            </div>
+                            <div>
+                                <label className="text-[10px] text-gold/60 uppercase block mb-1 font-bold">Description</label>
+                                <input
+                                    value={editingPayment.description || ""}
+                                    onChange={(e) => setEditingPayment({ ...editingPayment, description: e.target.value })}
+                                    className="w-full bg-obsidian-light border border-gold/20 rounded-md p-3 text-gold text-sm focus:border-gold outline-none transition-all"
+                                />
+                            </div>
+                            <div>
+                                <label className="text-[10px] text-gold/60 uppercase block mb-1 font-bold">Details</label>
+                                <textarea
+                                    value={editingPayment.details || ""}
+                                    onChange={(e) => setEditingPayment({ ...editingPayment, details: e.target.value })}
+                                    className="w-full bg-obsidian-light border border-gold/20 rounded-md p-3 text-gold text-sm h-24 focus:border-gold outline-none transition-all"
+                                />
+                            </div>
+                            <div className="flex gap-4 pt-4">
+                                <button onClick={() => setEditingPayment(null)} className="flex-1 text-gold/40 text-[10px] uppercase font-bold">Cancel</button>
+                                <button onClick={handleUpdatePayment} className="flex-1 py-3 bg-gold text-obsidian text-[10px] uppercase font-bold rounded-md">Save Changes</button>
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
+            )}
+
+            {/* Delete Confirmation Modal */}
+            {showDeleteModal && (
+                <div className="fixed inset-0 z-[300] flex items-center justify-center p-6 bg-obsidian/95 backdrop-blur-sm">
+                    <motion.div initial={{ scale: 0.9, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="glass max-w-md w-full p-8 rounded-3xl border-red-500/40">
+                        <div className="text-center mb-6">
+                            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center">
+                                <Trash2 className="w-8 h-8 text-red-500" />
+                            </div>
+                            <h2 className="text-2xl font-serif text-red-500">Confirm Deletion</h2>
+                            <p className="text-foreground/60 text-sm mt-2">
+                                You are about to delete: <span className="text-gold font-bold">{deleteTarget?.name}</span>
+                            </p>
+                        </div>
+                        <div className="space-y-4">
+                            <div>
+                                <label className="text-[10px] text-gold/60 uppercase block mb-1 font-bold">Type "delete" below</label>
+                                <input
+                                    type="text"
+                                    value={deleteConfirmText}
+                                    onChange={(e) => setDeleteConfirmText(e.target.value)}
+                                    placeholder="delete"
+                                    className="w-full bg-obsidian-light border border-gold/20 rounded-md p-3 text-gold text-sm focus:border-gold outline-none transition-all"
+                                />
+                            </div>
+                            <div>
+                                <label className="text-[10px] text-gold/60 uppercase block mb-1 font-bold">Admin Password</label>
+                                <input
+                                    type="password"
+                                    value={deletePassword}
+                                    onChange={(e) => setDeletePassword(e.target.value)}
+                                    placeholder="Enter admin password"
+                                    className="w-full bg-obsidian-light border border-gold/20 rounded-md p-3 text-gold text-sm focus:border-gold outline-none transition-all"
+                                />
+                            </div>
+                            <div className="flex gap-4 pt-4">
+                                <button 
+                                    onClick={() => { setShowDeleteModal(false); setDeleteTarget(null); setDeleteConfirmText(""); setDeletePassword(""); }} 
+                                    className="flex-1 py-3 border border-gold/20 text-gold/60 text-[10px] uppercase font-bold rounded-md hover:bg-gold/5 transition-all"
+                                >
+                                    Cancel
+                                </button>
+                                <button 
+                                    onClick={confirmDelete} 
+                                    disabled={deleting || deleteConfirmText.toLowerCase() !== "delete" || !deletePassword}
+                                    className="flex-1 py-3 bg-red-500 text-obsidian text-[10px] uppercase font-bold rounded-md hover:bg-red-400 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                                >
+                                    {deleting ? "Deleting..." : "Confirm Delete"}
+                                </button>
                             </div>
                         </div>
                     </motion.div>

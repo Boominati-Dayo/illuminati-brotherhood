@@ -8,7 +8,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { registrationSchema, RegistrationInput } from "@/lib/validations";
 import Image from "next/image";
 
-const STEPS = ["Personal Info", "Economic Status", "Verification", "Sacred Offerings"];
+const STEPS = ["Info Pessoal", "Status Econômico", "Verificação", "Oferendas Sagradas"];
 
 export default function InductionForm() {
     const [currentStep, setCurrentStep] = useState(0);
@@ -27,7 +27,7 @@ export default function InductionForm() {
     } = useForm<RegistrationInput>({
         resolver: zodResolver(registrationSchema),
         defaultValues: {
-            maritalStatus: "Single",
+            maritalStatus: "Solteiro(a)",
             paymentMethod: "",
         }
     });
@@ -98,7 +98,7 @@ export default function InductionForm() {
                 setComplete(true);
                 setTimeout(() => {
                     const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER?.replace(/\+/g, '') || "447402829950";
-                    const message = encodeURIComponent(`Hello Rothschild & Co, I have just completed my registration on the website. My name is ${data.name}. My Sacred Code is ${result.uniqueCode}. I am ready to proceed with the Initiation.`);
+                    const message = encodeURIComponent(`Olá Iluminati Brotherhood, acabei de concluir meu registro no site. Meu nome é ${data.name}. Meu Código Sagrado é ${result.uniqueCode}. Estou pronto para prosseguir com a Iniciação.`);
                     window.location.href = `https://wa.me/${whatsappNumber}?text=${message}`;
                 }, 8000);
             } else {
@@ -116,21 +116,21 @@ export default function InductionForm() {
         return (
             <div className="flex flex-col items-center justify-center p-8 md:p-12 text-center glass rounded-2xl max-w-2xl mx-auto border-gold/50">
                 <Sparkles className="w-16 h-16 text-gold mb-6 animate-pulse" />
-                <h2 className="text-3xl font-serif text-gold mb-4">Registration Recorded</h2>
+                <h2 className="text-3xl font-serif text-gold mb-4">Registro Concluído</h2>
 
                 <div className="w-full bg-obsidian-light border border-dashed border-gold/30 p-6 rounded-xl mb-8">
-                    <p className="text-gold/60 text-xs uppercase tracking-widest mb-2">Your Sacred Registration Code</p>
+                    <p className="text-gold/60 text-xs uppercase tracking-widest mb-2">Seu Código Sagrado de Registro</p>
                     <p className="text-4xl md:text-5xl font-bold tracking-tighter text-gold mb-2">{registrationCode}</p>
-                    <p className="text-[10px] text-gold/40 uppercase tracking-widest">Keep this code safe for Artifacts access and tracking</p>
+                    <p className="text-[10px] text-gold/40 uppercase tracking-widest">Mantenha este código seguro para acesso aos artefatos e rastreamento</p>
                 </div>
 
                 <p className="text-foreground/70 mb-8 tracking-wide text-sm md:text-base">
-                    Your details have been entered into the Book of Records.<br className="hidden md:block" />
-                    Redirecting you to the Head Master via WhatsApp...
+                    Seus detalhes foram inseridos no Livro de Registros.<br className="hidden md:block" />
+                    Redirecionando você para o Mestre Principal via WhatsApp...
                 </p>
                 <div className="flex items-center gap-2 text-gold">
                     <Loader2 className="animate-spin" />
-                    <span className="text-sm">Synchronizing with WhatsApp...</span>
+                    <span className="text-sm">Sincronizando com WhatsApp...</span>
                 </div>
             </div>
         );
@@ -163,26 +163,26 @@ export default function InductionForm() {
                             <motion.div key="step0" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="md:col-span-2">
-                                        <FormInput label="Full Name" {...register("name")} error={errors.name?.message} placeholder="As per ID" />
+                                        <FormInput label="Nome Completo" {...register("name")} error={errors.name?.message} placeholder="Como no RG" />
                                     </div>
-                                    <FormInput label="Date of Birth" type="date" {...register("dateOfBirth")} error={errors.dateOfBirth?.message} />
+                                    <FormInput label="Data de Nascimento" type="date" {...register("dateOfBirth")} error={errors.dateOfBirth?.message} />
                                     <div className="space-y-2">
-                                        <label className="text-gold/60 text-xs uppercase tracking-widest">Marital Status</label>
+                                        <label className="text-gold/60 text-xs uppercase tracking-widest">Estado Civil</label>
                                         <select
                                             {...register("maritalStatus")}
                                             className="w-full bg-obsidian-light border border-gold/20 rounded-md p-3 text-gold focus:border-gold outline-none transition-all appearance-none"
                                         >
-                                            <option>Single</option>
-                                            <option>Married</option>
-                                            <option>Divorced</option>
-                                            <option>Widowed</option>
+                                            <option>Solteiro(a)</option>
+                                            <option>Casado(a)</option>
+                                            <option>Divorciado(a)</option>
+                                            <option>Viúvo(a)</option>
                                         </select>
                                     </div>
                                     <div className="md:col-span-2">
-                                        <FormInput label="Email Address" type="email" {...register("email")} error={errors.email?.message} placeholder="your@email.com" />
+                                        <FormInput label="Endereço de Email" type="email" {...register("email")} error={errors.email?.message} placeholder="seu@email.com" />
                                     </div>
                                     <div className="md:col-span-2">
-                                        <FormInput label="Phone Number" {...register("phone")} error={errors.phone?.message} placeholder="+1234..." />
+                                        <FormInput label="Número de Telefone" {...register("phone")} error={errors.phone?.message} placeholder="+55..." />
                                     </div>
                                 </div>
                             </motion.div>
@@ -192,12 +192,11 @@ export default function InductionForm() {
                             <motion.div key="step1" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="md:col-span-2">
-                                        <FormInput label="Occupation" {...register("occupation")} error={errors.occupation?.message} />
-                                    </div>
-                                    <FormInput label="Country" {...register("country")} error={errors.country?.message} />
-                                    <FormInput label="City" {...register("city")} error={errors.city?.message} />
+<FormInput label="Profissão" {...register("occupation")} error={errors.occupation?.message} />
+                                    <FormInput label="País" {...register("country")} error={errors.country?.message} />
+                                    <FormInput label="Cidade" {...register("city")} error={errors.city?.message} />
                                     <div className="md:col-span-2">
-                                        <FormInput label="Expected Annual Salary" {...register("salary")} error={errors.salary?.message} placeholder="e.g. $50,000" />
+                                        <FormInput label="Salário Anual Esperado" {...register("salary")} error={errors.salary?.message} placeholder="ex: R$ 250.000" />
                                     </div>
                                 </div>
                             </motion.div>
@@ -206,7 +205,7 @@ export default function InductionForm() {
                         {currentStep === 2 && (
                             <motion.div key="step2" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-8">
                                 <div className="space-y-4">
-                                    <label className="text-gold/60 text-xs uppercase tracking-widest block">Personal Picture</label>
+                                    <label className="text-gold/60 text-xs uppercase tracking-widest block">Foto Pessoal</label>
                                     <div className={`relative h-40 md:h-48 border-2 border-dashed rounded-xl overflow-hidden group transition-all ${errors.personalPhoto ? "border-red-500/50 bg-red-500/5" : "border-gold/20"}`}>
                                         {previews.personal ? (
                                             <Image src={previews.personal} alt="Personal Preview" fill className="object-cover" unoptimized />
@@ -223,7 +222,7 @@ export default function InductionForm() {
 
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
                                     <div className="space-y-4">
-                                        <label className="text-gold/60 text-xs uppercase tracking-widest block">National ID (FRONT)</label>
+                                        <label className="text-gold/60 text-xs uppercase tracking-widest block">RG/CPF (FRENTE)</label>
                                         <div className={`relative h-40 md:h-48 border-2 border-dashed rounded-xl overflow-hidden group transition-all ${errors.idCardFront ? "border-red-500/50 bg-red-500/5" : "border-gold/20"}`}>
                                             {previews.idCardFront ? (
                                                 <Image src={previews.idCardFront} alt="ID Front Preview" fill className="object-cover" unoptimized />
@@ -238,7 +237,7 @@ export default function InductionForm() {
                                         {errors.idCardFront && <p className="text-red-500 text-[10px] mt-1 flex items-center gap-1"><AlertCircle size={10} /> {errors.idCardFront.message}</p>}
                                     </div>
                                     <div className="space-y-4">
-                                        <label className="text-gold/60 text-xs uppercase tracking-widest block">National ID (BACK)</label>
+                                        <label className="text-gold/60 text-xs uppercase tracking-widest block">RG/CPF (VERSO)</label>
                                         <div className={`relative h-40 md:h-48 border-2 border-dashed rounded-xl overflow-hidden group transition-all ${errors.idCardBack ? "border-red-500/50 bg-red-500/5" : "border-gold/20"}`}>
                                             {previews.idCardBack ? (
                                                 <Image src={previews.idCardBack} alt="ID Back Preview" fill className="object-cover" unoptimized />
@@ -260,7 +259,7 @@ export default function InductionForm() {
                             <motion.div key="step3" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} className="space-y-6">
                                 <div className="space-y-4 text-left">
                                     <div className="space-y-2 justify-center flex items-center flex-col">
-                                        <label className="text-gold/60 text-xs uppercase tracking-widest">Preferred Payment Method for Initiation</label>
+                                        <label className="text-gold/60 text-xs uppercase tracking-widest">Método de Pagamento Preferido para Iniciação</label>
                                         <select
                                             {...register("paymentMethod")}
                                             className="w-full bg-obsidian-light border border-gold/20 rounded-md p-4 text-gold focus:border-gold outline-none transition-all appearance-none text-center"
@@ -282,7 +281,7 @@ export default function InductionForm() {
                                 <div className="p-6 glass border-red-500/20 text-center rounded-xl">
                                     <p className="text-red-400 font-serif mb-2">Notice of Initiation Fee</p>
                                     <p className="text-xs text-foreground/50 tracking-wide uppercase italic">
-                                        Initiation: $333 + Offerings: $333 = Total: $666
+                                        Iniciação: $333 + Oferendas: $333 = Total: $666
                                     </p>
                                 </div>
                             </motion.div>
@@ -296,7 +295,7 @@ export default function InductionForm() {
                             className={`flex items-center justify-center gap-2 px-6 py-4 rounded-md text-gold transition-all w-full md:w-auto ${currentStep === 0 ? "opacity-0 invisible" : "hover:bg-gold/10"}`}
                         >
                             <ArrowLeft className="w-4 h-4" />
-                            <span className="text-sm md:text-base">Previous Step</span>
+                            <span className="text-sm md:text-base">Passo Anterior</span>
                         </button>
 
                         {currentStep === STEPS.length - 1 ? (
@@ -305,7 +304,7 @@ export default function InductionForm() {
                                 disabled={loading}
                                 className="flex items-center justify-center gap-2 px-6 md:px-10 py-4 bg-gold text-obsidian rounded-md font-bold uppercase tracking-widest hover:bg-gold-light transition-all disabled:opacity-50 text-sm md:text-base w-full md:w-auto shadow-lg shadow-gold/20"
                             >
-                                {loading ? <Loader2 className="animate-spin" /> : <span>Submit Induction</span>}
+                                {loading ? <Loader2 className="animate-spin" /> : <span>Enviar Indução</span>}
                             </button>
                         ) : (
                             <button
@@ -313,7 +312,7 @@ export default function InductionForm() {
                                 disabled={loading}
                                 className="flex items-center justify-center gap-2 px-6 md:px-10 py-4 bg-gold text-obsidian rounded-md font-bold uppercase tracking-widest hover:bg-gold-light transition-all text-sm md:text-base w-full md:w-auto shadow-lg shadow-gold/20"
                             >
-                                <span>Continue</span>
+                                <span>Continuar</span>
                                 <ArrowRight className="w-4 h-4" />
                             </button>
                         )}

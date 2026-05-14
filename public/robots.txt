@@ -1,0 +1,11 @@
+# Robots.txt for Iluminati Brotherhood
+User-agent: *
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# Sitemap
+Sitemap: https://illuminati-brotherhood.vercel.app/sitemap.xml
+
+# Crawl delay
+Crawl-delay: 1

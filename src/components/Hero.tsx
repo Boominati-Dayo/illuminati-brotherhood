@@ -6,12 +6,26 @@ import Image from "next/image";
 
 export default function Hero() {
     const [mounted, setMounted] = useState(false);
-    useEffect(() => setMounted(true), []);
+    const [scrollY, setScrollY] = useState(0);
+
+    useEffect(() => {
+        setMounted(true);
+        const handleScroll = () => setScrollY(window.scrollY);
+        window.addEventListener("scroll", handleScroll);
+        return () => window.removeEventListener("scroll", handleScroll);
+    }, []);
+
+    const y = mounted ? (scrollY * 0.3) : 0;
+    const opacity = mounted ? Math.max(0.3, 1 - scrollY / 300) : 1;
+
+    const scrollToSection = () => {
+        document.getElementById("steps")?.scrollIntoView({ behavior: "smooth" });
+    };
 
     return (
         <section className="relative min-h-screen flex items-center justify-center overflow-hidden py-20">
             {/* Background with Hero Image */}
-            <div className="absolute inset-0 z-0">
+            <div className="absolute inset-0 z-0" style={{ transform: mounted ? `translateY(${y}px)` : 'none' }}>
                 <Image
                     src="/chosen_initiation_placeholder.png"
                     alt="Sacred Background"
@@ -32,7 +46,7 @@ export default function Hero() {
                     <div className="relative w-24 h-24 md:w-40 md:h-40 sacred-glow rounded-full overflow-hidden border border-gold/20">
                         <Image
                             src="/illuminati_eyes_emblem.png"
-                            alt="Rothschild & Co Logo"
+                            alt="Iluminati Brotherhood Logo"
                             fill
                             className="object-cover"
                         />
@@ -45,7 +59,7 @@ export default function Hero() {
                     transition={{ duration: 1, delay: 0.3 }}
                     className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-serif gold-gradient-text mb-6 tracking-tighter"
                 >
-                    Rothschild & Co
+                    Iluminati Brotherhood
                 </motion.h1>
 
                 <motion.p
@@ -54,7 +68,7 @@ export default function Hero() {
                     transition={{ duration: 1, delay: 0.8 }}
                     className="text-base sm:text-xl md:text-2xl text-gold/80 max-w-2xl mx-auto mb-10 font-light tracking-[0.2em] md:tracking-widest uppercase"
                 >
-                    Follow the Light
+                    Siga a Luz
                 </motion.p>
 
                 <motion.div
@@ -62,12 +76,12 @@ export default function Hero() {
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ duration: 0.5, delay: 1.2 }}
                 >
-                    <a
-                        href="#steps"
-                        className="inline-block px-10 py-4 bg-transparent border border-gold text-gold hover:bg-gold hover:text-obsidian transition-all duration-500 rounded-sm tracking-widest uppercase font-bold text-sm"
+                    <button
+                        onClick={scrollToSection}
+                        className="inline-block px-8 sm:px-10 py-5 sm:py-4 bg-transparent border border-gold text-gold hover:bg-gold hover:text-obsidian transition-all duration-500 rounded-sm tracking-widest uppercase font-bold text-sm min-w-[200px] sm:min-w-0"
                     >
-                        Begin Your Journey
-                    </a>
+                        Inicie Sua Jornada
+                    </button>
                 </motion.div>
             </div>
 
