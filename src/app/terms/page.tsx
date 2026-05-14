@@ -13,52 +13,65 @@ export default function TermsPage() {
                     animate={{ opacity: 1, y: 0 }}
                     className="glass rounded-2xl p-8 md:p-12"
                 >
-                    <h1 className="text-4xl font-serif gold-gradient-text mb-8">Terms of Service</h1>
-                    
+                    <h1 className="text-4xl font-serif gold-gradient-text mb-8">Termos de Serviço</h1>
+
                     <div className="space-y-8 text-foreground/70 font-light">
                         <section>
-                            <h2 className="text-gold font-serif text-xl mb-4">Acceptance of Terms</h2>
-                            <p>By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement. If you do not agree to these terms, please do not use our services.</p>
+                            <h2 className="text-gold font-serif text-xl mb-4">Aceitação dos Termos</h2>
+                            <p>Ao acessar e usar este website, você aceita e concorda em estar vinculado aos termos e provisões deste acordo. Se você não concorda com estes termos, por favor não use nossos serviços.</p>
                         </section>
 
                         <section>
-                            <h2 className="text-gold font-serif text-xl mb-4">Membership Eligibility</h2>
-                            <p>Our services are intended for individuals who are of legal age and have the capacity to enter into binding agreements. By registering, you represent that you meet these requirements.</p>
+                            <h2 className="text-gold font-serif text-xl mb-4">Elegibilidade para Membros</h2>
+                            <p>Nossos serviços são destinados para indivíduos que são de maioridade legal e têm capacidade de celebrar acordos vinculantes. Ao se registrar, você representa que atende a esses requisitos.</p>
                         </section>
 
                         <section>
-                            <h2 className="text-gold font-serif text-xl mb-4">User Responsibilities</h2>
-                            <p>You agree to provide accurate information and maintain the security of your account. You are responsible for all activities under your account and must notify us immediately of any unauthorized use.</p>
+                            <h2 className="text-gold font-serif text-xl mb-4">Responsabilidades do Usuário</h2>
+                            <p>Você concorda em fornecer informações precisas e manter a segurança da sua conta. Você é responsável por todas as atividades sob sua conta e deve nos notificar imediatamente sobre qualquer uso não autorizado.</p>
                         </section>
 
                         <section>
-                            <h2 className="text-gold font-serif text-xl mb-4">Payment and Purchases</h2>
-                            <p>All purchases are final unless otherwise specified. You agree to pay all charges at the prices in effect when the charges are incurred. We reserve the right to modify prices at any time.</p>
+                            <h2 className="text-gold font-serif text-xl mb-4">Pagamento e Compras</h2>
+                            <p>Todas as compras são finais, a menos que especificado de outra forma. Você concorda em pagar todas as cobranças aos preços vigentes quando as cobranças são incorridas. Reservamo-nos o direito de modificar preços a qualquer momento.</p>
                         </section>
 
                         <section>
-                            <h2 className="text-gold font-serif text-xl mb-4">Intellectual Property</h2>
-                            <p>Todo o conteúdo, designs e materiais neste site são propriedade intelectual da Iluminati Brotherhood. Você não pode reproduzir, distribuir ou modificar qualquer conteúdo sem consentimento prévio por escrito.</p>
+                            <h2 className="text-gold font-serif text-xl mb-4">Propriedade Intelectual</h2>
+                            <p>Todo o conteúdo do site, incluindo textos, gráficos, logotipos e imagens, é propriedade da Iluminati Brotherhood e está protegido por leis de direitos autorais. Você não pode reproduzir, distribuir ou criar trabalhos derivados sem nossa permissão.</p>
                         </section>
 
                         <section>
-                            <h2 className="text-gold font-serif text-xl mb-4">Limitation of Liability</h2>
-                            <p>We shall not be liable for any indirect, incidental, or consequential damages arising from your use of our services. Our maximum liability shall not exceed the amount paid by you for the services.</p>
+                            <h2 className="text-gold font-serif text-xl mb-4">Limitação de Responsabilidade</h2>
+                            <p>Não somos responsáveis por quaisquer danos indiretos, incidentais, especiais ou consequentes decorrentes do uso de nossos serviços. Nossa responsabilidade total é limitada ao valor que você pagou pelos serviços.</p>
                         </section>
 
                         <section>
-                            <h2 className="text-gold font-serif text-xl mb-4">Termination</h2>
-                            <p>We reserve the right to terminate or suspend your account at any time for violation of these terms or for any other reason at our sole discretion.</p>
+                            <h2 className="text-gold font-serif text-xl mb-4">Rescisão</h2>
+                            <p>Reservamo-nos o direito de rescindir ou suspender sua conta a qualquer momento por violação destes termos ou por qualquer outro motivo a nosso exclusivo critério.</p>
                         </section>
 
                         <section>
-                            <h2 className="text-gold font-serif text-xl mb-4">Governing Law</h2>
-                            <p>These terms shall be governed by and construed in accordance with applicable laws. Any disputes shall be resolved in the appropriate jurisdiction.</p>
+                            <h2 className="text-gold font-serif text-xl mb-4">Indenização</h2>
+                            <p>Você concorda em indenizar e isentar a Iluminati Brotherhood de quaisquer reivindicações, danos ou despesas decorrentes de sua violação destes termos ou de seu uso de nossos serviços.</p>
                         </section>
 
-                        <p className="text-gold/40 text-sm pt-8 border-t border-gold/10">
-                            Last updated: {new Date().toLocaleDateString()}
-                        </p>
+                        <section>
+                            <h2 className="text-gold font-serif text-xl mb-4">Alterações nos Termos</h2>
+                            <p>Reservamo-nos o direito de modificar estes termos a qualquer momento. Alterações significativas serão comunicadas através de um aviso em nosso site. Seu uso contínuo após as alterações constitui aceitação dos novos termos.</p>
+                        </section>
+
+                        <section>
+                            <h2 className="text-gold font-serif text-xl mb-4">Lei Aplicável</h2>
+                            <p>Estes termos são regidos pelas leis do Brasil. Qualquer disputa decorrente destes termos será resolvida nos tribunais brasileiros.</p>
+                        </section>
+
+                        <section>
+                            <h2 className="text-gold font-serif text-xl mb-4">Contato</h2>
+                            <p>Se tiver dúvidas sobre estes Termos de Serviço, entre em contato conosco através da página de contato.</p>
+                        </section>
+
+                        <p className="text-[10px] text-gold/30 uppercase tracking-widest text-center">Última atualização: 2026</p>
                     </div>
                 </motion.div>
             </div>
@@ -67,23 +80,23 @@ export default function TermsPage() {
                 <div className="container mx-auto px-6">
                     <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
                         <div className="text-center md:text-left">
-                            <h4 className="text-gold font-serif text-lg mb-4 tracking-wider">Navigation</h4>
+                            <h4 className="text-gold font-serif text-lg mb-4 tracking-wider">Navegação</h4>
                             <div className="flex flex-col gap-3">
-                                <Link href="/" className="text-gold/50 hover:text-gold transition-all text-sm uppercase tracking-widest">Home</Link>
-                                <Link href="/shop" className="text-gold/50 hover:text-gold transition-all text-sm uppercase tracking-widest">Artifacts Shop</Link>
-                                <Link href="/track" className="text-gold/50 hover:text-gold transition-all text-sm uppercase tracking-widest">Order Tracking</Link>
-                                <Link href="/contact" className="text-gold/50 hover:text-gold transition-all text-sm uppercase tracking-widest">Contact</Link>
+                                <Link href="/" className="text-gold/50 hover:text-gold transition-all text-sm uppercase tracking-widest">Início</Link>
+                                <Link href="/shop" className="text-gold/50 hover:text-gold transition-all text-sm uppercase tracking-widest">Loja de Artefatos</Link>
+                                <Link href="/track" className="text-gold/50 hover:text-gold transition-all text-sm uppercase tracking-widest">Rastrear Pedido</Link>
+                                <Link href="/contact" className="text-gold/50 hover:text-gold transition-all text-sm uppercase tracking-widest">Contato</Link>
                             </div>
                         </div>
                         <div className="text-center md:text-left">
                             <h4 className="text-gold font-serif text-lg mb-4 tracking-wider">Legal</h4>
                             <div className="flex flex-col gap-3">
-                                <Link href="/privacy" className="text-gold/50 hover:text-gold transition-all text-sm uppercase tracking-widest">Privacy Policy</Link>
-                                <Link href="/terms" className="text-gold/50 hover:text-gold transition-all text-sm uppercase tracking-widest">Terms of Service</Link>
+                                <Link href="/privacy" className="text-gold/50 hover:text-gold transition-all text-sm uppercase tracking-widest">Política de Privacidade</Link>
+                                <Link href="/terms" className="text-gold/50 hover:text-gold transition-all text-sm uppercase tracking-widest">Termos de Serviço</Link>
                             </div>
                         </div>
                         <div className="text-center">
-                            <h4 className="text-gold font-serif text-lg mb-4 tracking-wider">Connect With Us</h4>
+                            <h4 className="text-gold font-serif text-lg mb-4 tracking-wider">Conecte-se Conosco</h4>
                             <div className="flex justify-center gap-6">
                                 <a href="#" className="w-10 h-10 rounded-full border border-gold/20 flex items-center justify-center text-gold/50 hover:text-gold hover:border-gold transition-all"><Facebook size={18} /></a>
                                 <a href="#" className="w-10 h-10 rounded-full border border-gold/20 flex items-center justify-center text-gold/50 hover:text-gold hover:border-gold transition-all"><Instagram size={18} /></a>
@@ -97,9 +110,13 @@ export default function TermsPage() {
                             <p className="text-gold/30 text-xs uppercase tracking-[0.3em]">Verdade • Excelência • Valor</p>
                         </div>
                     </div>
+
                     <div className="border-t border-gold/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
                         <p className="text-gold/20 text-[10px] tracking-widest uppercase">© {new Date().getFullYear()} Iluminati Brotherhood. Todos os direitos reservados.</p>
-                        <button onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })} className="w-10 h-10 rounded-full border border-gold/20 flex items-center justify-center text-gold/40 hover:text-gold hover:border-gold transition-all">
+                        <button
+                            onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
+                            className="w-10 h-10 rounded-full border border-gold/20 flex items-center justify-center text-gold/40 hover:text-gold hover:border-gold transition-all"
+                        >
                             <ArrowUp size={16} />
                         </button>
                     </div>

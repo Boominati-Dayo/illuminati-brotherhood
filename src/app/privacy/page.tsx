@@ -13,47 +13,50 @@ export default function PrivacyPage() {
                     animate={{ opacity: 1, y: 0 }}
                     className="glass rounded-2xl p-8 md:p-12"
                 >
-                    <h1 className="text-4xl font-serif gold-gradient-text mb-8">Privacy Policy</h1>
+<h1 className="text-4xl font-serif gold-gradient-text mb-8">Política de Privacidade</h1>
                     
                     <div className="space-y-8 text-foreground/70 font-light">
                         <section>
-                            <h2 className="text-gold font-serif text-xl mb-4">Information We Collect</h2>
-                            <p>We collect information you provide directly to us, including name, email, phone number, and payment information when you register or make a purchase. We also collect usage data and device information automatically.</p>
+                            <h2 className="text-gold font-serif text-xl mb-4">Informações que Coletamos</h2>
+                            <p>Coletamos informações que você nos fornece diretamente, incluindo nome, email, número de telefone e informações de pagamento quando você se registra ou faz uma compra. Também coletamos dados de uso e informações do dispositivo automaticamente.</p>
                         </section>
 
                         <section>
-                            <h2 className="text-gold font-serif text-xl mb-4">How We Use Your Information</h2>
-                            <p>Your information is used to provide and improve our services, process transactions, communicate with you about your membership, and comply with legal obligations. We may also use your information for security and fraud prevention purposes.</p>
+                            <h2 className="text-gold font-serif text-xl mb-4">Como Usamos Suas Informações</h2>
+                            <p>Suas informações são usadas para fornecer e melhorar nossos serviços, processar transações, comunicar-se com você sobre sua assinatura e cumprir obrigações legais. Também podemos usar suas informações para fins de segurança e prevenção de fraudes.</p>
                         </section>
 
                         <section>
-                            <h2 className="text-gold font-serif text-xl mb-4">Information Sharing</h2>
-                            <p>We do not sell your personal information. We may share your information with service providers who assist us in operating our platform, and when required by law or to protect our rights.</p>
+                            <h2 className="text-gold font-serif text-xl mb-4">Compartilhamento de Informações</h2>
+                            <p>Não vendemos suas informações pessoais. Podemos compartilhar suas informações com prestadores de serviços que nos auxiliam na operação da plataforma, e quando exigido por lei ou para proteger nossos direitos.</p>
                         </section>
 
                         <section>
-                            <h2 className="text-gold font-serif text-xl mb-4">Data Security</h2>
-                            <p>We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.</p>
+                            <h2 className="text-gold font-serif text-xl mb-4">Segurança dos Dados</h2>
+                            <p>Implementamos medidas técnicas e organizacionais apropriadas para proteger suas informações pessoais contra acesso não autorizado, alteração, divulgação ou destruição.</p>
                         </section>
 
                         <section>
-                            <h2 className="text-gold font-serif text-xl mb-4">Your Rights</h2>
-                            <p>You have the right to access, correct, or delete your personal information. You may also object to processing or request data portability. Contact us to exercise these rights.</p>
+                            <h2 className="text-gold font-serif text-xl mb-4">Seus Direitos</h2>
+                            <p>Você tem o direito de acessar, corrigir ou excluir suas informações pessoais. Também pode se opor ao processamento de seus dados ou solicitar a portabilidade dos dados. Entre em contato conosco para exercer esses direitos.</p>
                         </section>
 
                         <section>
                             <h2 className="text-gold font-serif text-xl mb-4">Cookies</h2>
-                            <p>We use cookies and similar tracking technologies to enhance your experience. You can control cookies through your browser settings, but disabling them may affect functionality.</p>
+                            <p>Utilizamos cookies para melhorar sua experiência. Você pode opt-out de cookies não essenciais através do banner de consentimento de cookies em nosso site.</p>
                         </section>
 
                         <section>
-                            <h2 className="text-gold font-serif text-xl mb-4">Contact Us</h2>
-                            <p>If you have questions about this Privacy Policy, please contact us through our official channels.</p>
+                            <h2 className="text-gold font-serif text-xl mb-4">Alterações nesta Política</h2>
+                            <p>Podemos atualizar esta política periodicamente. Notificaremos você sobre quaisquer alterações publicando a nova política nesta página e atualizando a data de &quot;última atualização&quot;.</p>
                         </section>
 
-                        <p className="text-gold/40 text-sm pt-8 border-t border-gold/10">
-                            Last updated: {new Date().toLocaleDateString()}
-                        </p>
+                        <section>
+                            <h2 className="text-gold font-serif text-xl mb-4">Contato</h2>
+                            <p>Se tiver dúvidas sobre esta Política de Privacidade, entre em contato conosco através da página de contato ou pelo email contato@illuminati-brotherhood.vercel.app.</p>
+                        </section>
+
+                        <p className="text-[10px] text-gold/30 uppercase tracking-widest text-center">Última atualização: 2026</p>
                     </div>
                 </motion.div>
             </div>

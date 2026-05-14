@@ -42,20 +42,20 @@ export default function TrackPage() {
             if (res.ok) {
                 setOrder(data);
             } else {
-                setError(data.error || "The records could not be found.");
+                setError(data.error || "Os registros não puderam ser encontrados.");
             }
         } catch {
-            setError("Connection to the portal was disrupted.");
+            setError("A conexão com o portal foi interrompida.");
         } finally {
             setLoading(false);
         }
     };
 
     const statusSteps = [
-        { key: "pending", label: "Order Received", icon: Clock },
-        { key: "processing", label: "Ritual Preparation", icon: Box },
-        { key: "shipped", label: "In Transit", icon: Truck },
-        { key: "delivered", label: "Manifested", icon: CheckCircle2 }
+        { key: "pending", label: "Pedido Recebido", icon: Clock },
+        { key: "processing", label: "Preparação Ritual", icon: Box },
+        { key: "shipped", label: "Em Trânsito", icon: Truck },
+        { key: "delivered", label: "Manifestado", icon: CheckCircle2 }
     ];
 
     const currentStatusIndex = statusSteps.findIndex(s => s.key === order?.status);
@@ -64,16 +64,16 @@ export default function TrackPage() {
         <main className="min-h-screen bg-obsidian text-foreground pt-32 pb-20 px-6">
             <div className="container mx-auto max-w-4xl">
                 <header className="text-center mb-16">
-                    <h1 className="text-4xl md:text-6xl font-serif gold-gradient-text mb-4">Sacred Tracking</h1>
+                    <h1 className="text-4xl md:text-6xl font-serif gold-gradient-text mb-4">Rastreamento Sagrado</h1>
                     <p className="text-gold/40 uppercase tracking-[0.3em] text-[10px] md:text-xs">
-                        Monitor the manifestation of your artifacts
+                        Monitore a manifestação dos seus artefatos
                     </p>
                 </header>
 
                 <div className="glass p-8 md:p-12 rounded-3xl border-gold/20 mb-12">
                     <form onSubmit={handleTrack} className="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div className="space-y-2">
-                            <label className="text-[10px] text-gold/60 uppercase tracking-widest block font-bold">Registration Code</label>
+                            <label className="text-[10px] text-gold/60 uppercase tracking-widest block font-bold">Código de Registro</label>
                             <input
                                 placeholder="RC-XXXX-XXXX"
                                 value={registrationCode}
@@ -83,7 +83,7 @@ export default function TrackPage() {
                             />
                         </div>
                         <div className="space-y-2">
-                            <label className="text-[10px] text-gold/60 uppercase tracking-widest block font-bold">Order Number</label>
+                            <label className="text-[10px] text-gold/60 uppercase tracking-widest block font-bold">Número do Pedido</label>
                             <input
                                 placeholder="ORD-XXXXXX"
                                 value={orderNumber}
@@ -97,7 +97,7 @@ export default function TrackPage() {
                             disabled={loading}
                             className="md:col-span-2 w-full py-4 bg-gold text-obsidian font-bold uppercase tracking-widest text-xs rounded-md hover:bg-gold-light transition-all flex items-center justify-center gap-2"
                         >
-                            {loading ? <Loader2 size={18} className="animate-spin" /> : <><Search size={18} /> Locate Order</>}
+                            {loading ? <Loader2 size={18} className="animate-spin" /> : <><Search size={18} /> Localizar Pedido</>}
                         </button>
                     </form>
 
@@ -132,13 +132,13 @@ export default function TrackPage() {
                                             )}
                                         </div>
                                         <div>
-                                            <p className="text-[10px] text-gold/40 uppercase tracking-widest mb-1">Acquired Artifact</p>
+                                            <p className="text-[10px] text-gold/40 uppercase tracking-widest mb-1">Artefato Adquirido</p>
                                             <h2 className="text-2xl font-serif text-gold">{order.itemId.name}</h2>
-                                            <p className="text-xs text-foreground/60 mt-2">Ordered on {new Date(order.createdAt).toLocaleDateString(undefined, { dateStyle: 'long' })}</p>
+                                            <p className="text-xs text-foreground/60 mt-2">Pedido em {new Date(order.createdAt).toLocaleDateString('pt-BR', { dateStyle: 'long' })}</p>
                                         </div>
                                     </div>
                                     <div className="text-left md:text-right">
-                                        <p className="text-[10px] text-gold/40 uppercase tracking-widest mb-1">Current Status</p>
+                                        <p className="text-[10px] text-gold/40 uppercase tracking-widest mb-1">Status Atual</p>
                                         <p className="text-xl font-bold text-gold uppercase tracking-tighter">{order.status}</p>
                                     </div>
                                 </div>
@@ -171,7 +171,7 @@ export default function TrackPage() {
 
                             <div className="text-center p-8 bg-gold/5 rounded-2xl border border-gold/10">
                                 <p className="text-xs text-gold/60 uppercase tracking-widest italic leading-relaxed">
-                                    &quot;The path of progress is steady and focused. Your artifact is being handled with the highest earthly and spiritual care.&quot;
+                                    &quot;O caminho do progresso é firme e dedicado. Seu artefato está sendo tratado com o mais alto cuidado terreno e espiritual.&quot;
                                 </p>
                             </div>
                         </motion.div>

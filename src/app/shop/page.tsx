@@ -46,7 +46,7 @@ export default function ShopPage() {
 
     const handlePurchase = async () => {
         if (!formData.uniqueCode) {
-            setError("The Sacred Code is required for the path to open.");
+            setError("O Código Sagrado é obrigatório para que o caminho se abra.");
             return;
         }
         setIsSubmitting(true);
@@ -67,10 +67,10 @@ export default function ShopPage() {
                 setOrderNumber(result.orderNumber);
                 setPurchaseStep("success");
             } else {
-                setError(result.error || "The connection was severed. Verify your code.");
+                setError(result.error || "A conexão foi cortada. Verifique seu código.");
             }
         } catch {
-            setError("A spiritual disruption occurred. Check your network.");
+            setError("Ocorreu uma interrupção espiritual. Verifique sua conexão.");
         } finally {
             setIsSubmitting(false);
         }
@@ -88,9 +88,9 @@ export default function ShopPage() {
         <main className="min-h-screen bg-obsidian text-foreground pt-32 pb-20 px-6">
             <div className="container mx-auto max-w-7xl">
                 <header className="text-center mb-20">
-                    <h1 className="text-5xl md:text-7xl font-serif gold-gradient-text mb-6">Sacred Artifacts</h1>
+                    <h1 className="text-5xl md:text-7xl font-serif gold-gradient-text mb-6">Artefatos Sagrados</h1>
                     <p className="text-gold/60 max-w-2xl mx-auto uppercase tracking-widest text-xs md:text-sm">
-                        Only those who have stepped into the light may possess these tools of progress.
+                        Apenas aqueles que entraram na luz podem possuir estas ferramentas de progresso.
                     </p>
                 </header>
 
@@ -118,7 +118,7 @@ export default function ShopPage() {
                                 )}
                                 <div className="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent opacity-60" />
                                 <div className="absolute bottom-6 left-6">
-                                    <p className="text-gold font-bold text-2xl">${item.price.toLocaleString()}</p>
+                                    <p className="text-gold font-bold text-2xl">R$ {item.price.toLocaleString('pt-BR')}</p>
                                 </div>
                             </div>
                             <div className="p-8 flex-grow flex flex-col">
@@ -130,7 +130,7 @@ export default function ShopPage() {
                                     onClick={() => { setSelectedItem(item); setPurchaseStep("details"); }}
                                     className="mt-auto w-full py-4 border border-gold/30 text-gold uppercase tracking-widest text-xs font-bold hover:bg-gold hover:text-obsidian transition-all flex items-center justify-center gap-2 group-hover:border-gold"
                                 >
-                                    Acquire Artifact <ArrowRight size={14} />
+                                    Adquirir Artefato <ArrowRight size={14} />
                                 </button>
                             </div>
                         </motion.div>
@@ -170,17 +170,17 @@ export default function ShopPage() {
                                     <div className="space-y-6">
                                         <h2 className="text-3xl font-serif text-gold">{selectedItem.name}</h2>
                                         <div className="flex items-center gap-4 py-3 border-y border-gold/10">
-                                            <span className="text-xl font-bold text-gold">${selectedItem.price.toLocaleString()}</span>
-                                            <span className="text-[10px] text-gold/40 uppercase tracking-widest">Ritual Worth</span>
+                                            <span className="text-xl font-bold text-gold">R$ {selectedItem.price.toLocaleString('pt-BR')}</span>
+                                            <span className="text-[10px] text-gold/40 uppercase tracking-widest">Valor Ritual</span>
                                         </div>
                                         <div className="space-y-4">
                                             <p className="text-foreground/70 text-sm leading-relaxed italic border-l-2 border-gold/20 pl-4">
                                                 &quot;{selectedItem.description}&quot;
                                             </p>
                                             <div className="bg-gold/5 p-4 rounded-xl border border-gold/10">
-                                                <p className="text-gold/60 text-[10px] uppercase font-bold mb-2">Mystical Properties</p>
+                                                <p className="text-gold/60 text-[10px] uppercase font-bold mb-2">Propriedades Místicas</p>
                                                 <p className="text-xs text-foreground/80 leading-relaxed font-light">
-                                                    {selectedItem.mysticalProperties || "Properties revealed upon possession."}
+                                                    {selectedItem.mysticalProperties || "Propriedades reveladas ao possuir."}
                                                 </p>
                                             </div>
                                         </div>
@@ -188,17 +188,17 @@ export default function ShopPage() {
                                             onClick={() => setPurchaseStep("checkout")}
                                             className="w-full py-4 bg-gold text-obsidian font-bold uppercase tracking-widest text-xs rounded-md hover:bg-gold-light transition-all flex items-center justify-center gap-2 mt-8"
                                         >
-                                            Proceed to Acquisition <ShieldCheck size={16} />
+                                            Prosseguir para Aquisição <ShieldCheck size={16} />
                                         </button>
                                     </div>
                                 ) : purchaseStep === "checkout" ? (
                                     <div className="space-y-6">
-                                        <h2 className="text-2xl font-serif text-gold">Finalize Ritual</h2>
-                                        <p className="text-xs text-gold/40 uppercase tracking-widest mb-8">Verification Required</p>
+                                        <h2 className="text-2xl font-serif text-gold">Finalizar Ritual</h2>
+                                        <p className="text-xs text-gold/40 uppercase tracking-widest mb-8">Verificação Necessária</p>
 
                                         <div className="space-y-4">
                                             <div>
-                                                <label className="text-[10px] text-gold/60 uppercase block mb-2 font-bold">Sacred Registration Code</label>
+                                                <label className="text-[10px] text-gold/60 uppercase block mb-2 font-bold">Código de Registro Sagrado</label>
                                                 <input
                                                     placeholder="RC-XXXX-XXXX"
                                                     value={formData.uniqueCode}
@@ -208,13 +208,13 @@ export default function ShopPage() {
                                             </div>
 
                                             <div>
-                                                <label className="text-[10px] text-gold/60 uppercase block mb-2 font-bold">Preferred Offering Method</label>
+                                                <label className="text-[10px] text-gold/60 uppercase block mb-2 font-bold">Método de Oferta Preferido</label>
                                                 <select
                                                     value={formData.paymentMethod}
                                                     onChange={(e) => setFormData({ ...formData, paymentMethod: e.target.value })}
                                                     className="w-full bg-obsidian-light border border-gold/20 rounded-md p-4 text-gold text-sm focus:border-gold outline-none transition-all appearance-none text-center"
                                                 >
-                                                    <option value="">Select Method</option>
+                                                    <option value="">Selecionar Método</option>
                                                     {paymentMethods.map(m => (
                                                         <option key={m._id} value={m.name}>{m.name}</option>
                                                     ))}
@@ -232,13 +232,13 @@ export default function ShopPage() {
                                                 disabled={isSubmitting}
                                                 className="w-full py-4 bg-gold text-obsidian font-bold uppercase tracking-widest text-sm rounded-md hover:bg-gold-light transition-all flex items-center justify-center gap-2 mt-4"
                                             >
-                                                {isSubmitting ? <Loader2 size={18} className="animate-spin" /> : <>Initiate Order <Sparkles size={16} /></>}
+                                                {isSubmitting ? <Loader2 size={18} className="animate-spin" /> : <>Iniciar Pedido <Sparkles size={16} /></>}
                                             </button>
                                             <button
                                                 onClick={() => setPurchaseStep("details")}
                                                 className="w-full py-2 text-gold/30 text-[10px] uppercase font-bold tracking-widest"
                                             >
-                                                Go Back
+                                                Voltar
                                             </button>
                                         </div>
                                     </div>
@@ -248,22 +248,22 @@ export default function ShopPage() {
                                             <CheckCircle2 size={32} />
                                         </div>
                                         <div>
-                                            <h2 className="text-3xl font-serif text-gold mb-2">Order Recorded</h2>
-                                            <p className="text-[10px] text-gold/40 uppercase tracking-widest mb-8">Process Initiated</p>
+                                            <h2 className="text-3xl font-serif text-gold mb-2">Pedido Registrado</h2>
+                                            <p className="text-[10px] text-gold/40 uppercase tracking-widest mb-8">Processo Iniciado</p>
                                         </div>
                                         <div className="bg-obsidian-light border border-dashed border-gold/20 p-6 rounded-2xl">
-                                            <p className="text-[10px] text-gold/40 uppercase mb-2">Order Reference</p>
+                                            <p className="text-[10px] text-gold/40 uppercase mb-2">Referência do Pedido</p>
                                             <p className="text-3xl font-mono text-gold font-bold">{orderNumber}</p>
                                         </div>
                                         <p className="text-xs text-foreground/60 leading-relaxed px-4">
-                                            Your request of the {selectedItem.name} has been received.
-                                            Check your member email for payment instructions and the shipping protocol.
+                                            O pedido do {selectedItem.name} foi recebido.
+                                            Verifique seu email de membro para instruções de pagamento e protocolo de envio.
                                         </p>
                                         <button
                                             onClick={() => setSelectedItem(null)}
                                             className="w-full py-4 bg-transparent border border-gold/30 text-gold uppercase tracking-[0.3em] text-[10px] font-bold mt-8 hover:bg-gold/5 transition-all"
                                         >
-                                            Close Record
+                                            Fechar Registro
                                         </button>
                                     </div>
                                 )}
