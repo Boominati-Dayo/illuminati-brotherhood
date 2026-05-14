@@ -67,9 +67,6 @@ export const metadata: Metadata = {
       "max-image-preview": "large",
       "max-snippet": -1,
     },
-    "geo-position": "Brazil",
-    "geo-region": "BR",
-    "geo-placename": "Brazil",
   },
   alternates: {
     canonical: BASE_URL,
