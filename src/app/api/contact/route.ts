@@ -11,18 +11,18 @@ export async function POST(req: NextRequest) {
 
         const emailHtml = `
             <div style="font-family: sans-serif; border: 1px solid #d4af37; padding: 20px; color: #050505;">
-                <h2 style="color: #d4af37;">New Contact Message</h2>
-                <p><strong>From:</strong> ${name} (${email})</p>
-                <p><strong>Subject:</strong> ${subject}</p>
-                <hr style="border: 0; border-top: 1px solid #d4af37/20; margin: 20px 0;" />
-                <p><strong>Message:</strong></p>
+                <h2 style="color: #d4af37;">Nova Mensagem de Contato</h2>
+                <p><strong>De:</strong> ${name} (${email})</p>
+                <p><strong>Assunto:</strong> ${subject}</p>
+                <hr style="border: 0; border-top: 1px solid rgba(212,175,55,0.2); margin: 20px 0;" />
+                <p><strong>Mensagem:</strong></p>
                 <p style="white-space: pre-wrap;">${message}</p>
             </div>
         `;
 
         await sendEmail(
             process.env.ADMIN_EMAIL!,
-            `Portal Contact: ${subject}`,
+            `Contato do Portal: ${subject}`,
             emailHtml
         );
 

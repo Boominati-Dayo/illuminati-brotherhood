@@ -38,38 +38,38 @@ export async function POST(req: NextRequest) {
         // 5. Send Emails
         const adminEmailHtml = `
             <div style="font-family: sans-serif; border: 1px solid #d4af37; padding: 20px;">
-                <h2 style="color: #d4af37;">New Order Received: ${orderNumber}</h2>
-                <p><strong>Member:</strong> ${registration.name} (${registration.uniqueCode})</p>
-                <p><strong>Artifact:</strong> ${item.name}</p>
-                <p><strong>Price:</strong> $${item.price}</p>
-                <p><strong>Payment Method:</strong> ${paymentMethod}</p>
+                <h2 style="color: #d4af37;">Novo Pedido Recebido: ${orderNumber}</h2>
+                <p><strong>Membro:</strong> ${registration.name} (${registration.uniqueCode})</p>
+                <p><strong>Artefato:</strong> ${item.name}</p>
+                <p><strong>Preço:</strong> R$ ${item.price.toLocaleString('pt-BR')}</p>
+                <p><strong>Método de Pagamento:</strong> ${paymentMethod}</p>
                 <hr />
-                <p>Please contact the member via the admin dashboard to confirm payment and provide ritual instructions.</p>
-                <p><a href="${process.env.NEXTAUTH_URL}/admin">View Order in Dashboard</a></p>
+                <p>Por favor, entre em contato com o membro através do painel administrativo para confirmar o pagamento e fornecer instruções rituais.</p>
+                <p><a href="${process.env.NEXTAUTH_URL}/admin">Ver Pedido no Painel</a></p>
             </div>
         `;
 
         const userEmailHtml = `
             <div style="font-family: serif; background-color: #0a0a0a; color: #d4af37; padding: 40px; border: 1px solid #d4af37; text-align: center;">
-                <h1 style="color: #d4af37;">Order Recorded</h1>
+                <h1 style="color: #d4af37;">Pedido Registrado</h1>
                 <div style="text-align: left; max-width: 500px; margin: 0 auto; border: 1px dashed #d4af37; padding: 20px; margin-bottom: 30px;">
-                    <p style="text-align: center; font-size: 0.8em; text-transform: uppercase;">Order Number</p>
+                    <p style="text-align: center; font-size: 0.8em; text-transform: uppercase;">Número do Pedido</p>
                     <p style="text-align: center; font-size: 2em; font-weight: bold;">${orderNumber}</p>
                 </div>
                 <div style="text-align: left; max-width: 500px; margin: 0 auto;">
-                    <p>Dear ${registration.name},</p>
-                    <p>Your request for the <strong>${item.name}</strong> has been recorded.</p>
-                    <p><strong>Next Steps:</strong> An administrator will review your order and send the payment details and shipping protocol to your email shortly.</p>
-                    <p>You can track your order status on our portal using your registration code and this order number.</p>
-                    <p style="margin-top: 30px;">Light and progress be upon you.</p>
+                    <p>Prezado(a) ${registration.name},</p>
+                    <p>Seu pedido do <strong>${item.name}</strong> foi registrado.</p>
+                    <p><strong>Próximos Passos:</strong> Um administrador revisará seu pedido e enviará os detalhes de pagamento e protocolo de envio para seu email em breve.</p>
+                    <p>Você pode rastrear o status do seu pedido em nosso portal usando seu código de registro e este número de pedido.</p>
+                    <p style="margin-top: 30px;">Luz e progresso estejam com você.</p>
                     <p style="text-align: right;"><em>Iluminati Brotherhood</em></p>
                 </div>
             </div>
         `;
 
         await Promise.allSettled([
-            sendEmail(process.env.ADMIN_EMAIL!, `NEW ORDER: ${orderNumber}`, adminEmailHtml),
-            sendEmail(registration.email, `Order Confirmation - ${orderNumber}`, userEmailHtml)
+            sendEmail(process.env.ADMIN_EMAIL!, `NOVO PEDIDO: ${orderNumber}`, adminEmailHtml),
+            sendEmail(registration.email, `Confirmação de Pedido - ${orderNumber}`, userEmailHtml)
         ]);
 
         return NextResponse.json({ success: true, orderNumber });
