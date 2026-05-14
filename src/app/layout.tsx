@@ -1,4 +1,4 @@
-/* Layout Refresh Trigger 2 */
+/* Layout Refresh Trigger 3 */
 import type { Metadata } from "next";
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
@@ -57,7 +57,7 @@ export const metadata: Metadata = {
   authors: [{ name: "Iluminati Brotherhood", url: BASE_URL }],
   creator: "Iluminati Brotherhood",
   publisher: "Iluminati Brotherhood",
-robots: {
+  robots: {
     index: true,
     follow: true,
     googleBot: {
@@ -66,12 +66,6 @@ robots: {
       "max-video-preview": -1,
       "max-image-preview": "large",
       "max-snippet": -1,
-    },
-  },
-    other: {
-      "geo-position": "Brazil",
-      "geo-region": "BR",
-      "geo-placename": "Brazil",
     },
   },
   alternates: {
@@ -242,7 +236,7 @@ export default function RootLayout({
         description: "Organização de elite para membros no Brasil.",
         url: BASE_URL,
         telephone: "+55",
-        email: "contato@illuminati-brotherhood.vercel.app",
+        email: `contact@illuminati-brotherhood.vercel.app`,
         address: {
           "@type": "PostalAddress",
           addressCountry: "BR",
@@ -388,12 +382,6 @@ export default function RootLayout({
         />
         <link rel="preload" as="font" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" crossOrigin="anonymous" />
         <link rel="preload" as="font" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" crossOrigin="anonymous" />
-        <link
-          rel="alternate"
-          type="application/rss+xml"
-          title="Iluminati Brotherhood Feed"
-          href="/rss.xml"
-        />
         <link rel="hreflang" hrefLang="pt-BR" href={BASE_URL} />
         <link rel="hreflang" hrefLang="x-default" href={BASE_URL} />
         <script
